@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+.env
+.venv
+venv/
+ENV/
+
+# Virtual environments
+*.swp
+.venv/
+env/
+venv/
+ENV/
+
+# Logs
+*.log
+logs/
+
+# Datos grandes
+#data/raw/
+#data/tfrecords/
+#data/splits/
+
+# Modelos pesados
+models/checkpoints/
+models/saved_model/
+models/*.tflite
+models/*.h5
+
+# Configs de IDE
+.vscode/
+.idea/
+
+# Compilados temporales
+build/
+dist/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
