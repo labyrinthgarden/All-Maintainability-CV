@@ -22,7 +22,7 @@ ENV/
 logs/
 
 # Datos grandes
-#data/raw/
+data/raw/
 data/tfrecords/
 data/splits/
 
@@ -43,4 +43,3 @@ dist/
 # Archivos de sistema
 .DS_Store
 Thumbs.db
-
