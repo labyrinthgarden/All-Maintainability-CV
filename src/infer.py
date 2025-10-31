@@ -2,8 +2,8 @@ import tensorflow as tf
 import numpy as np
 import cv2
 
-MODEL_DIR = "../models/saved_model"
-IMG_PATH = "../data/raw/test.jpg"
+MODEL_DIR = "models/saved_model.keras"
+IMG_PATH = "data/raw/paredes_exteriores_agrietadas/concrete_wall_81.jpeg"
 
 if __name__ == "__main__":
     model = tf.keras.models.load_model(MODEL_DIR)
@@ -16,4 +16,3 @@ if __name__ == "__main__":
     preds = model.predict(img_array)
     pred_class = class_names[np.argmax(preds)]
     print(f"🔎 Predicción: {pred_class} ({np.max(preds)*100:.2f}%)")
-

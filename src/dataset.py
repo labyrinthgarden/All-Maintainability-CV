@@ -8,5 +8,5 @@ def load_dataset(data_dir, img_size=(224, 224), batch_size=16):
         image_size=img_size,
         batch_size=batch_size
     )
+    class_names=dataset.class_names
     return dataset.prefetch(tf.data.AUTOTUNE)
-

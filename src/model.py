@@ -12,7 +12,6 @@ def create_model(num_classes):
         tf.keras.layers.Dense(num_classes, activation="softmax")
     ])
     model.compile(optimizer="adam",
-                  loss="sparse_categorical_crossentropy",
-                  metrics=["accuracy"])
+        loss="sparse_categorical_crossentropy",
+        metrics=["accuracy"])
     return model
-

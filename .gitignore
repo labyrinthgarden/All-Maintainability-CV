@@ -23,8 +23,8 @@ logs/
 
 # Datos grandes
 #data/raw/
-#data/tfrecords/
-#data/splits/
+data/tfrecords/
+data/splits/
 
 # Modelos pesados
 models/checkpoints/
