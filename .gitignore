@@ -31,6 +31,7 @@ models/checkpoints/
 models/saved_model/
 models/*.tflite
 models/*.h5
+models/*.keras
 
 # Configs de IDE
 .vscode/
