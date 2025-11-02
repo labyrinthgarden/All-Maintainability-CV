@@ -17,6 +17,12 @@ env/
 venv/
 ENV/
 
+# Data
+*.png
+*.jpeg
+*.webp
+*.zip
+
 # Logs
 *.log
 logs/
