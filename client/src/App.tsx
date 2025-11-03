@@ -21,6 +21,10 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Training upload state
+  const [trainFiles, setTrainFiles] = useState<File[]>([]);
+  const [trainLabel, setTrainLabel] = useState<string>("");
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInferResults(null);
     setError(null);
@@ -91,6 +95,38 @@ function App() {
       (res) => res.predicted_class === className && !res.error
     ) || [];
 
+  // Handlers for training image upload
+  const handleTrainFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setTrainFiles(Array.from(e.target.files));
+    }
+  };
+
+  const handleTrainUpload = async () => {
+    if (!trainFiles.length || !trainLabel) {
+      setError("Please select images and enter a label for training.");
+      return;
+    }
+    setError(null);
+    setTrainMessage(null);
+    const formData = new FormData();
+    trainFiles.forEach(file => formData.append("files", file));
+    formData.append("label", trainLabel);
+
+    try {
+      const response = await fetch(`${API_URL}/upload-training-data/`, {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) throw new Error("Failed to upload training data");
+      setTrainFiles([]);
+      setTrainLabel("");
+      setTrainMessage("Training images uploaded!");
+    } catch (err: any) {
+      setError(err.message || "Failed to upload training data");
+    }
+  };
+
   return (
     <div className="cv-container">
       <header className="cv-header">
@@ -100,7 +136,6 @@ function App() {
           You can also retrain the model with new data.
         </p>
       </header>
-
       <section className="cv-upload-section">
         <input
           type="file"
@@ -122,6 +157,8 @@ function App() {
           </button>
         )}
       </section>
+
+
 
       {previewUrls.length > 0 && (
         <section className="cv-preview-section" style={{display: "flex", flexWrap: "wrap", gap: "1rem"}}>
@@ -145,13 +182,6 @@ function App() {
         >
           {loading ? "Analyzing..." : "Run Inference"}
         </button>
-        <button
-          className="cv-btn cv-btn-train"
-          onClick={handleRetrain}
-          disabled={trainLoading}
-        >
-          {trainLoading ? "Retraining..." : "Retrain Model"}
-        </button>
       </section>
 
       {error && (
@@ -166,6 +196,37 @@ function App() {
         </div>
       )}
 
+      {/* Training image upload section */}
+      <section className="cv-upload-section" style={{ marginTop: "2em" }}>
+        <h3>Upload Images for Training</h3>
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleTrainFileChange}
+        />
+        <input
+          type="text"
+          placeholder="Class name"
+          value={trainLabel}
+          onChange={e => setTrainLabel(e.target.value)}
+          style={{ marginLeft: "1em", marginRight: "1em" }}
+        />
+        <button
+          className="cv-btn"
+          onClick={handleTrainUpload}
+          disabled={trainFiles.length === 0 || !trainLabel}
+        >
+          Upload for Training
+        </button>
+        <button
+          className="cv-btn cv-btn-train"
+          onClick={handleRetrain}
+          disabled={trainFiles.length === 0 || trainLoading}
+        >
+          {trainLoading ? "Retraining..." : "Retrain Model"}
+        </button>
+      </section>
       {inferResults && (
         <section className="cv-result-section">
           <h2>Prediction Results</h2>

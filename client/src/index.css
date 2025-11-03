@@ -4,3 +4,11 @@ body {
   min-height: 100vh;
   margin: 0;
 }
+input{
+    background-color: black;
+    outline:none;
+    border:solid white 1px;
+    color:white;
+    padding:25px;
+    border-radius: 12px;
+}

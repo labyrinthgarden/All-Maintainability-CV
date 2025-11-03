@@ -10,6 +10,8 @@ Used image data set: https://drive.google.com/drive/folders/1oMcUj21yA8JCsuyxqMu
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 # Preview Screenshots
-![Vista 1](previews/1.PNG)
-![Vista 2](previews/2.PNG)
-![Vista 3](previews/3.PNG)
+![Vista 1](previews/1.png)
+![Vista 2](previews/2.png)
+![Vista 3](previews/3.png)
+![Vista 4](previews/4.png)
+![Vista 5](previews/5.png)

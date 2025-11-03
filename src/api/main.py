@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, Form
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
@@ -9,6 +9,9 @@ import tensorflow as tf
 
 import sys
 from pathlib import Path
+import shutil
+from datetime import datetime
+from typing import List
 
 # Add src to sys.path for imports
 sys.path.append(str(Path(__file__).resolve().parent.parent))
@@ -19,6 +22,7 @@ from model import create_model
 DATA_DIR = str(Path(__file__).resolve().parent.parent.parent / "data" / "raw")
 MODEL_PATH = str(Path(__file__).resolve().parent.parent.parent / "models" / "saved_model.keras")
 CLASS_NAMES = ["paredes_exteriores_agrietadas", "paredes_exteriores_buen_estado", "ceilingDamaged", "ceilingGood"]
+TRAIN_DATA_DIR = str(Path(__file__).resolve().parent.parent.parent / "data" / "training_images")
 
 
 
@@ -60,8 +64,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-from typing import List
-
 @app.post("/infer/")
 async def infer_images(files: List[UploadFile] = File(...)):
     """Receive multiple images and return predictions for each."""
@@ -93,6 +95,27 @@ async def infer_images(files: List[UploadFile] = File(...)):
         return results
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Inference failed: {str(e)}")
+
+@app.post("/upload-training-data/")
+async def upload_training_data(
+    files: List[UploadFile] = File(...),
+    label: str = Form(...)
+):
+    """
+    Receive images and a label, store them in the training images directory with unique names.
+    """
+    try:
+        label_dir = os.path.join(TRAIN_DATA_DIR, label)
+        os.makedirs(label_dir, exist_ok=True)
+        for file in files:
+            timestamp = datetime.now().strftime("%Y%m%d%H%M%S%f")
+            new_filename = f"user_{timestamp}_{file.filename}"
+            file_path = os.path.join(label_dir, new_filename)
+            with open(file_path, "wb") as buffer:
+                shutil.copyfileobj(file.file, buffer)
+        return {"message": "Training images uploaded successfully."}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to upload training data: {str(e)}")
 
 @app.post("/train/")
 def train_model():
