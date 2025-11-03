@@ -2,4 +2,7 @@ tensorflow
 opencv-python
 numpy
 matplotlib
+fastapi
+uvicorn
+
 
