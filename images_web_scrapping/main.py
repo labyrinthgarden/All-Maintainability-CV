@@ -41,6 +41,4 @@ def descargar_imagenes_duckduckgo(query, carpeta, cantidad=100, delay=1.0):
 
 
 if __name__ == "__main__":
-    descargar_imagenes_duckduckgo("cracked wall", "imagenes/paredes_agrietadas", 100)
-    descargar_imagenes_duckduckgo("concrete wall", "imagenes/paredes_buen_estado", 100)
-
+    descargar_imagenes_duckduckgo("external roof", "ceilingGood", 100)

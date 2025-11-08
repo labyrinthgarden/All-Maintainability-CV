@@ -1,4 +1,5 @@
 import tensorflow as tf
+from tensorflow.keras.utils import plot_model
 
 def create_model(num_classes):
     model = tf.keras.Sequential([
@@ -15,3 +16,10 @@ def create_model(num_classes):
         loss="sparse_categorical_crossentropy",
         metrics=["accuracy"])
     return model
+
+if __name__=="__main__":
+    num_classes=4
+    model=create_model(num_classes)
+    model.summary()
+    plot_model(model,to_file="cnn_architecture.png",show_shapes=True,show_layer_names=True)
+    print("Diagrama de la arquitectura guardado como cnn_architecture.png")
