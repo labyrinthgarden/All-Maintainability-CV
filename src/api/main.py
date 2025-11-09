@@ -18,10 +18,11 @@ sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from dataset import load_dataset
 from model import create_model
+import logging
 
 DATA_DIR = str(Path(__file__).resolve().parent.parent.parent / "data" / "raw")
 MODEL_PATH = str(Path(__file__).resolve().parent.parent.parent / "models" / "saved_model.keras")
-CLASS_NAMES = ["paredes_exteriores_agrietadas", "paredes_exteriores_buen_estado", "ceilingDamaged", "ceilingGood"]
+CLASS_NAMES = ["paredes_1", "paredes_2", "ceiling_1", "ceiling_2"]
 TRAIN_DATA_DIR = str(Path(__file__).resolve().parent.parent.parent / "data" / "training_images")
 
 
@@ -30,14 +31,18 @@ def ensure_model():
     """Train and save the model if it doesn't exist."""
     if not os.path.exists(MODEL_PATH):
         os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
-        train_ds = load_dataset(DATA_DIR)
-        # Get class names from dataset
-        class_names = train_ds.class_names if hasattr(train_ds, "class_names") else CLASS_NAMES
+        # Usar validation_split para separar entrenamiento y validación
+        train_ds, val_ds, class_names = load_dataset(DATA_DIR)
         num_classes = len(class_names)
         model = create_model(num_classes)
-        model.fit(train_ds, epochs=3)
+        history = model.fit(
+            train_ds,
+            validation_data=val_ds,
+            epochs=20
+        )
         model.save(MODEL_PATH)
         print(f"Model trained")
+        print("Historial de entrenamiento:", history.history)
 
 def load_model():
     ensure_model()
@@ -69,6 +74,8 @@ async def infer_images(files: List[UploadFile] = File(...)):
     """Receive multiple images and return predictions for each."""
     try:
         model = load_model()
+        # Load class names from the dataset to ensure correct mapping
+        _, _, class_names = load_dataset(DATA_DIR)
         results = []
         for file in files:
             contents = await file.read()
@@ -83,14 +90,16 @@ async def infer_images(files: List[UploadFile] = File(...)):
             img_resized = cv2.resize(img, (224, 224))
             img_array = np.expand_dims(img_resized, axis=0) / 255.0
             preds = model.predict(img_array)
+            logging.info(f"Predicciones brutas para {file.filename}: {preds.tolist()}")
             pred_idx = int(np.argmax(preds))
-            pred_class = CLASS_NAMES[pred_idx]
+            pred_class = class_names[pred_idx]
             confidence = float(np.max(preds))
             results.append({
                 "filename": file.filename,
                 "predicted_class": pred_class,
                 "confidence": confidence,
-                "class_names": CLASS_NAMES
+                "class_names": class_names,
+                "raw_predictions": preds.tolist()
             })
         return results
     except Exception as e:
@@ -121,12 +130,16 @@ async def upload_training_data(
 def train_model():
     """Trigger model training (overwrites existing model)."""
     try:
-        train_ds = load_dataset(DATA_DIR)
-        class_names = train_ds.class_names if hasattr(train_ds, "class_names") else CLASS_NAMES
+        train_ds, val_ds, class_names = load_dataset(DATA_DIR)
         num_classes = len(class_names)
         model = create_model(num_classes)
-        model.fit(train_ds, epochs=3)
+        history = model.fit(
+            train_ds,
+            validation_data=val_ds,
+            epochs=20
+        )
         model.save(MODEL_PATH)
+        print("Historial de entrenamiento:", history.history)
         return {"message": f"Model retrained"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Training failed: {str(e)}")

@@ -3,11 +3,11 @@ import numpy as np
 import cv2
 
 MODEL_DIR = "models/saved_model.keras"
-IMG_PATH = "data/raw/paredes_exteriores_agrietadas/concrete_wall_81.jpeg"
+IMG_PATH = "/home/aphr/Documents/nada/2.jpeg"
 
 if __name__ == "__main__":
     model = tf.keras.models.load_model(MODEL_DIR)
-    class_names = ["paredes_exteriores_agrietadas", "paredes_exteriores_buen_estado", "ceilingDamaged", "ceilingGood"]
+    class_names = ["paredes_1", "paredes_2", "ceiling_1", "ceiling_2"]
 
     img = cv2.imread(IMG_PATH)
     img_resized = cv2.resize(img, (224, 224))

@@ -259,13 +259,13 @@ function App() {
           <div style={{marginTop: "1.5em"}}>
             <h3 style={{marginBottom: "0.3em"}}>Images classified as <span style={{color: "#ef4444"}}>agrietadas</span>:</h3>
             <ul>
-              {filterByClass("paredes_exteriores_agrietadas").map((res, idx) => (
+              {filterByClass("paredes_2").map((res, idx) => (
                 <li key={idx}>{res.filename}</li>
               ))}
             </ul>
             <h3 style={{marginBottom: "0.3em"}}>Images classified as <span style={{color: "#ef4444"}}>damaged</span>:</h3>
             <ul>
-              {filterByClass("ceilingDamaged").map((res, idx) => (
+              {filterByClass("ceiling_2").map((res, idx) => (
                 <li key={idx}>{res.filename}</li>
               ))}
             </ul>
