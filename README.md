@@ -9,7 +9,7 @@ Used image data set: https://drive.google.com/drive/folders/1oMcUj21yA8JCsuyxqMu
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 # Previews
-[Ver video (RAW GitHub)](https://github.com/https://github.com/labyrinthgarden/All-Maintainability-CV/raw/main/docs/video.mp4)
+[Ver video (RAW GitHub)](https://github.com/labyrinthgarden/All-Maintainability-CV/raw/main/docs/video.mp4)
 ![Vista 2](previews/2.png)
 ![Vista 3](previews/3.png)
 ![Vista 4](previews/4.png)
