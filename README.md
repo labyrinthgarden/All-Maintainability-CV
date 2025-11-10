@@ -12,7 +12,7 @@ Used image data set: https://drive.google.com/drive/folders/1oMcUj21yA8JCsuyxqMu
 # Previews
 https://github.com/user-attachments/assets/7da49d6d-eac7-4cb3-877b-b576e9692a6f
 
+![Vista 1](previews/1.png)
 ![Vista 2](previews/2.png)
 ![Vista 3](previews/3.png)
 ![Vista 4](previews/4.png)
-![Vista 5](previews/5.png)
