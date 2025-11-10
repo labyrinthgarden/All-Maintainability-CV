@@ -10,8 +10,7 @@ Used image data set: https://drive.google.com/drive/folders/1oMcUj21yA8JCsuyxqMu
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 
 # Previews
-https://github.com/user-attachments/assets/7da49d6d-eac7-4cb3-877b-b576e9692a6f
-
+https://github.com/user-attachments/assets/9bbcad26-4720-48b1-977b-4b8ab27a82f5
 ![Vista 1](previews/1.png)
 ![Vista 2](previews/2.png)
 ![Vista 3](previews/3.png)
