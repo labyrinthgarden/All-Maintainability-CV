@@ -88,7 +88,7 @@ async def infer_images(files: List[UploadFile] = File(...)):
                 })
                 continue
             img_resized = cv2.resize(img, (224, 224))
-            img_array = np.expand_dims(img_resized, axis=0) / 255.0
+            img_array = np.expand_dims(img_resized, axis=0)
             preds = model.predict(img_array)
             logging.info(f"Predicciones brutas para {file.filename}: {preds.tolist()}")
             pred_idx = int(np.argmax(preds))

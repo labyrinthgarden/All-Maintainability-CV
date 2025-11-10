@@ -8,9 +8,11 @@ Used image data set: https://drive.google.com/drive/folders/1oMcUj21yA8JCsuyxqMu
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-# Preview Screenshots
-[![](previews/1.png)](previews/video.mp4)
-![Vista 1](previews/1.png)
+# Previews
+<video width="800" controls>
+  <source src="https://labyrinthgarden.github.io/All-Maintainability/docs/video.mp4" type="video/mp4">
+  Tu navegador no soporta videos HTML5.
+</video>
 ![Vista 2](previews/2.png)
 ![Vista 3](previews/3.png)
 ![Vista 4](previews/4.png)
